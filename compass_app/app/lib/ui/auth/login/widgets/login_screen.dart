@@ -63,9 +63,20 @@ class _LoginScreenState extends State<LoginScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
-                  TextField(controller: _email),
+                  TextField(
+                    controller: _email,
+                    decoration: InputDecoration(
+                      labelText: AppLocalization.of(context).email,
+                    ),
+                  ),
                   const SizedBox(height: Dimens.paddingVertical),
-                  TextField(controller: _password, obscureText: true),
+                  TextField(
+                    controller: _password,
+                    obscureText: true,
+                    decoration: InputDecoration(
+                      labelText: AppLocalization.of(context).password,
+                    ),
+                  ),
                   const SizedBox(height: Dimens.paddingVertical),
                   ListenableBuilder(
                     listenable: widget.viewModel.login,

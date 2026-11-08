@@ -26,22 +26,27 @@ class AppSearchBar extends StatelessWidget {
     return Row(
       children: [
         Expanded(
-          child: InkWell(
-            borderRadius: BorderRadius.circular(16.0),
-            onTap: onTap,
-            child: Container(
-              height: 64,
-              decoration: BoxDecoration(
-                border: Border.all(color: AppColors.grey1),
-                borderRadius: BorderRadius.circular(16.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: Dimens.paddingHorizontal,
+          // Named by its text; the role says it opens the search form. On the
+          // search form itself there is no onTap, and then it is not a button.
+          child: Semantics(
+            button: onTap != null,
+            child: InkWell(
+              borderRadius: BorderRadius.circular(16.0),
+              onTap: onTap,
+              child: Container(
+                height: 64,
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.grey1),
+                  borderRadius: BorderRadius.circular(16.0),
                 ),
-                child: Align(
-                  alignment: AlignmentDirectional.centerStart,
-                  child: _QueryText(config: config),
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(
+                    horizontal: Dimens.paddingHorizontal,
+                  ),
+                  child: Align(
+                    alignment: AlignmentDirectional.centerStart,
+                    child: _QueryText(config: config),
+                  ),
                 ),
               ),
             ),

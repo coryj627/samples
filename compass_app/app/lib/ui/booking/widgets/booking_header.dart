@@ -121,9 +121,12 @@ class _Headline extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text(
-              booking.destination.name,
-              style: Theme.of(context).textTheme.headlineLarge,
+            Semantics(
+              headingLevel: 1,
+              child: Text(
+                booking.destination.name,
+                style: Theme.of(context).textTheme.headlineLarge,
+              ),
             ),
             Text(
               dateFormatStartEnd(

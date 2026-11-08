@@ -39,25 +39,38 @@ class _LogoutButtonState extends State<LogoutButton> {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      height: 40.0,
-      width: 40.0,
-      child: DecoratedBox(
-        decoration: BoxDecoration(
-          border: Border.all(color: AppColors.grey1),
-          borderRadius: BorderRadius.circular(8.0),
-          color: Colors.transparent,
-        ),
+    // 48x48 tap target (the Material / WCAG 2.5.8 minimum) around the 40x40
+    // visual; the icon alone says nothing to a screen reader, so the button
+    // carries a label.
+    return Semantics(
+      button: true,
+      label: AppLocalization.of(context).logout,
+      child: SizedBox(
+        height: 48.0,
+        width: 48.0,
         child: InkResponse(
           borderRadius: BorderRadius.circular(8.0),
           onTap: () {
             widget.viewModel.logout.execute();
           },
           child: Center(
-            child: Icon(
-              size: 24.0,
-              Icons.logout,
-              color: Theme.of(context).colorScheme.onSurface,
+            child: SizedBox(
+              height: 40.0,
+              width: 40.0,
+              child: DecoratedBox(
+                decoration: BoxDecoration(
+                  border: Border.all(color: AppColors.grey1),
+                  borderRadius: BorderRadius.circular(8.0),
+                  color: Colors.transparent,
+                ),
+                child: Center(
+                  child: Icon(
+                    size: 24.0,
+                    Icons.logout,
+                    color: Theme.of(context).colorScheme.onSurface,
+                  ),
+                ),
+              ),
             ),
           ),
         ),

@@ -87,7 +87,14 @@ class _Card extends StatelessWidget {
                 colorBlendMode: showTitle ? BlendMode.darken : null,
                 errorListener: imageErrorListener,
               ),
-              if (showTitle) Center(child: SvgPicture.asset('assets/logo.svg')),
+              if (showTitle)
+                Center(
+                  // Decorative logo over the photo.
+                  child: SvgPicture.asset(
+                    'assets/logo.svg',
+                    excludeFromSemantics: true,
+                  ),
+                ),
             ],
           ),
         ),

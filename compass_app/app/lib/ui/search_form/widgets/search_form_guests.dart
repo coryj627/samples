@@ -4,6 +4,7 @@
 
 import 'package:flutter/material.dart';
 
+import '../../core/localization/applocalization.dart';
 import '../../core/themes/colors.dart';
 import '../../core/themes/dimens.dart';
 import '../view_models/search_form_viewmodel.dart';
@@ -41,7 +42,13 @@ class SearchFormGuests extends StatelessWidget {
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Text('Who', style: Theme.of(context).textTheme.titleMedium),
+              Semantics(
+                headingLevel: 2,
+                child: Text(
+                  'Who',
+                  style: Theme.of(context).textTheme.titleMedium,
+                ),
+              ),
               _QuantitySelector(viewModel),
             ],
           ),
@@ -58,22 +65,23 @@ class _QuantitySelector extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 90,
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          InkWell(
-            key: const ValueKey(removeGuestsKey),
-            onTap: () {
-              viewModel.guests--;
-            },
-            child: const Icon(
-              Icons.remove_circle_outline,
-              color: AppColors.grey3,
-            ),
-          ),
-          ListenableBuilder(
+    // IconButtons: 48x48 tap targets, a button role and a spoken label (the
+    // tooltip) instead of bare 24px icons. The row sizes to its content so
+    // the count still fits at large text scales.
+    return Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
+        IconButton(
+          key: const ValueKey(removeGuestsKey),
+          tooltip: AppLocalization.of(context).removeGuest,
+          onPressed: () {
+            viewModel.guests--;
+          },
+          icon: const Icon(Icons.remove_circle_outline, color: AppColors.grey3),
+        ),
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 4),
+          child: ListenableBuilder(
             listenable: viewModel,
             builder: (context, _) => Text(
               viewModel.guests.toString(),
@@ -82,15 +90,16 @@ class _QuantitySelector extends StatelessWidget {
                   : Theme.of(context).textTheme.bodyMedium,
             ),
           ),
-          InkWell(
-            key: const ValueKey(addGuestsKey),
-            onTap: () {
-              viewModel.guests++;
-            },
-            child: const Icon(Icons.add_circle_outline, color: AppColors.grey3),
-          ),
-        ],
-      ),
+        ),
+        IconButton(
+          key: const ValueKey(addGuestsKey),
+          tooltip: AppLocalization.of(context).addGuest,
+          onPressed: () {
+            viewModel.guests++;
+          },
+          icon: const Icon(Icons.add_circle_outline, color: AppColors.grey3),
+        ),
+      ],
     );
   }
 }

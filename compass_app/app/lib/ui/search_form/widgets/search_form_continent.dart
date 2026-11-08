@@ -142,14 +142,19 @@ class _CarouselItem extends StatelessWidget {
             Positioned.fill(
               child: Material(
                 color: Colors.transparent,
-                child: InkWell(
-                  onTap: () {
-                    if (viewModel.selectedContinent == name) {
-                      viewModel.selectedContinent = null;
-                    } else {
-                      viewModel.selectedContinent = name;
-                    }
-                  },
+                // Named by the card's text (merged); the role says it is a
+                // toggle button.
+                child: Semantics(
+                  button: true,
+                  child: InkWell(
+                    onTap: () {
+                      if (viewModel.selectedContinent == name) {
+                        viewModel.selectedContinent = null;
+                      } else {
+                        viewModel.selectedContinent = name;
+                      }
+                    },
+                  ),
                 ),
               ),
             ),
