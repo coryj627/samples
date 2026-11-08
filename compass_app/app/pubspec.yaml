@@ -37,6 +37,11 @@ dev_dependencies:
   build_runner: ^2.4.14
   freezed: '>=3.0.0 <5.0.0'
   json_serializable: ^6.9.0
+  flutter_a11y_test:
+    git:
+      url: https://github.com/coryj627/flutter-a11y.git
+      ref: main # pin a release tag
+      path: packages/flutter_a11y_test
 
 flutter:
   uses-material-design: true

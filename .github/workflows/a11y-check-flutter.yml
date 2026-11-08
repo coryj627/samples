@@ -1,0 +1,59 @@
+# Dogfood workflow for the flutter/samples fork: scans compass_app with
+# a11y-check-flutter on every push and PR. Review-only — the committed
+# compass_app/app/.a11y/flutter/baseline.json is the accepted floor, so the job
+# fails only on a NEW finding at or above the config's fail_at.
+#
+# One-time setup in the fork:
+#   1. Secret FLUTTER_A11Y_READ_TOKEN: a fine-grained PAT with Contents: Read-only
+#      on coryj627/flutter-a11y (private). It lets `pub get` fetch flutter_a11y_test
+#      and `dart pub global activate` fetch the CLI.
+#   2. coryj627/flutter-a11y → Settings → Actions → General → Access: allow
+#      repositories owned by the user, so `uses: coryj627/flutter-a11y@…` resolves.
+#   3. Code scanning must be enabled on the fork for the SARIF upload step.
+name: a11y-check-flutter (compass_app)
+
+on:
+  push:
+    branches: [main]
+    paths: [compass_app/**, .github/workflows/a11y-check-flutter.yml]
+  pull_request:
+    paths: [compass_app/**, .github/workflows/a11y-check-flutter.yml]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  security-events: write # github/codeql-action/upload-sarif
+
+jobs:
+  a11y:
+    name: a11y-check-flutter
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: subosito/flutter-action@v2
+        with:
+          channel: stable
+          flutter-version: 3.47.9
+          cache: true
+
+      - name: Read access to coryj627/flutter-a11y (private)
+        env:
+          TOKEN: ${{ secrets.FLUTTER_A11Y_READ_TOKEN }}
+        run: |
+          git config --global url."https://x-access-token:${TOKEN}@github.com/".insteadOf "https://github.com/"
+
+      - name: Scan compass_app (pub get → flutter test → a11y_check_flutter scan)
+        id: a11y
+        uses: coryj627/flutter-a11y@main
+        with:
+          working-directory: compass_app/app
+          ref: main
+
+      - name: Upload SARIF to code scanning
+        if: always() && steps.a11y.outputs.sarif != ''
+        uses: github/codeql-action/upload-sarif@v3
+        with:
+          sarif_file: ${{ steps.a11y.outputs.sarif }}
+          category: a11y-check-flutter
