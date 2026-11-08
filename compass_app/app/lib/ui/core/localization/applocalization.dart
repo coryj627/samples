@@ -12,6 +12,13 @@ class AppLocalization {
 
   static const _strings = <String, String>{
     'activities': 'Activities',
+    'addGuest': 'Add guest',
+    'back': 'Back',
+    'email': 'Email',
+    'home': 'Home',
+    'logout': 'Logout',
+    'password': 'Password',
+    'removeGuest': 'Remove guest',
     'addDates': 'Add Dates',
     'bookingDeleted': 'Booking deleted',
     'bookNewTrip': 'Book New Trip',
@@ -46,6 +53,20 @@ class AppLocalization {
       _strings[label] ?? '[${label.toUpperCase()}]';
 
   String get activities => _get('activities');
+
+  String get addGuest => _get('addGuest');
+
+  String get back => _get('back');
+
+  String get email => _get('email');
+
+  String get home => _get('home');
+
+  String get logout => _get('logout');
+
+  String get password => _get('password');
+
+  String get removeGuest => _get('removeGuest');
 
   String get addDates => _get('addDates');
 

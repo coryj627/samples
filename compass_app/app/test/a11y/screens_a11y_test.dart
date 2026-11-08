@@ -6,6 +6,9 @@
 // the RuntimeFindingsSink in flutter_test_config.dart writes them to
 // .a11y/flutter/runtime-findings.json and `a11y_check_flutter scan` decides,
 // against the committed baseline, what fails CI.
+import 'dart:async';
+import 'dart:io';
+
 import 'package:compass_app/data/repositories/activity/activity_repository.dart';
 import 'package:compass_app/data/repositories/auth/auth_repository.dart';
 import 'package:compass_app/data/repositories/booking/booking_repository.dart';
@@ -20,9 +23,6 @@ import 'package:compass_app/routing/router.dart';
 import 'package:compass_app/routing/routes.dart';
 import 'package:compass_app/ui/core/localization/applocalization.dart';
 import 'package:compass_app/ui/core/themes/theme.dart';
-import 'dart:async';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_a11y_test/flutter_a11y_test.dart';
@@ -104,7 +104,9 @@ Future<void> _audit(
     ).then(done.complete, onError: done.completeError),
     (error, stack) {
       if ('$error'.contains('GoogleFonts')) return;
-      FlutterError.reportError(FlutterErrorDetails(exception: error, stack: stack));
+      FlutterError.reportError(
+        FlutterErrorDetails(exception: error, stack: stack),
+      );
     },
   );
   await done.future;
@@ -159,7 +161,8 @@ void main() {
     TestDefaultBinaryMessengerBinding.instance.defaultBinaryMessenger
         .setMockMethodCallHandler(
           const MethodChannel('plugins.flutter.io/path_provider'),
-          (call) async => Directory.systemTemp.createTempSync('compass-a11y-').path,
+          (call) async =>
+              Directory.systemTemp.createTempSync('compass-a11y-').path,
         );
   });
 
@@ -185,15 +188,30 @@ void main() {
   });
 
   testWidgets('results', (tester) async {
-    await _audit(tester, 'results', location: Routes.results, config: _fullConfig);
+    await _audit(
+      tester,
+      'results',
+      location: Routes.results,
+      config: _fullConfig,
+    );
   });
 
   testWidgets('activities', (tester) async {
-    await _audit(tester, 'activities', location: Routes.activities, config: _fullConfig);
+    await _audit(
+      tester,
+      'activities',
+      location: Routes.activities,
+      config: _fullConfig,
+    );
   });
 
   testWidgets('booking (new, from the itinerary)', (tester) async {
-    await _audit(tester, 'booking', location: Routes.booking, config: _fullConfig);
+    await _audit(
+      tester,
+      'booking',
+      location: Routes.booking,
+      config: _fullConfig,
+    );
   });
 
   testWidgets('booking (existing, by id)', (tester) async {

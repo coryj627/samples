@@ -35,9 +35,12 @@ class ActivitiesHeader extends StatelessWidget {
                 context.go(Routes.results);
               },
             ),
-            Text(
-              AppLocalization.of(context).activities,
-              style: Theme.of(context).textTheme.titleLarge,
+            Semantics(
+              headingLevel: 1,
+              child: Text(
+                AppLocalization.of(context).activities,
+                style: Theme.of(context).textTheme.titleLarge,
+              ),
             ),
             const HomeButton(),
           ],

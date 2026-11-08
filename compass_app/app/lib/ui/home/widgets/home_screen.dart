@@ -184,24 +184,34 @@ class _Booking extends StatelessWidget {
           ],
         ),
       ),
-      child: InkWell(
-        onTap: onTap,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            horizontal: Dimens.of(context).paddingScreenHorizontal,
-            vertical: Dimens.paddingVertical,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(booking.name, style: Theme.of(context).textTheme.titleLarge),
-              Text(
-                dateFormatStartEnd(
-                  DateTimeRange(start: booking.startDate, end: booking.endDate),
+      // The card is named by its texts; the role says it opens the booking.
+      child: Semantics(
+        button: true,
+        child: InkWell(
+          onTap: onTap,
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: Dimens.of(context).paddingScreenHorizontal,
+              vertical: Dimens.paddingVertical,
+            ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  booking.name,
+                  style: Theme.of(context).textTheme.titleLarge,
                 ),
-                style: Theme.of(context).textTheme.bodyLarge,
-              ),
-            ],
+                Text(
+                  dateFormatStartEnd(
+                    DateTimeRange(
+                      start: booking.startDate,
+                      end: booking.endDate,
+                    ),
+                  ),
+                  style: Theme.of(context).textTheme.bodyLarge,
+                ),
+              ],
+            ),
           ),
         ),
       ),

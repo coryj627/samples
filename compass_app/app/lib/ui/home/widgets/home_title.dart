@@ -35,10 +35,12 @@ class HomeHeader extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             ClipOval(
+              // Decorative: the name below identifies the user.
               child: Image.asset(
                 user.picture,
                 width: Dimens.of(context).profilePictureSize,
                 height: Dimens.of(context).profilePictureSize,
+                excludeFromSemantics: true,
               ),
             ),
             LogoutButton(viewModel: logoutViewModel),
@@ -65,10 +67,13 @@ class _Title extends StatelessWidget {
         radius: 2,
         colors: [Colors.purple.shade700, Colors.purple.shade400],
       ).createShader(Rect.fromLTWH(0, 0, bounds.width, bounds.height)),
-      child: Text(
-        text,
-        style: GoogleFonts.rubik(
-          textStyle: Theme.of(context).textTheme.headlineLarge,
+      child: Semantics(
+        headingLevel: 1,
+        child: Text(
+          text,
+          style: GoogleFonts.rubik(
+            textStyle: Theme.of(context).textTheme.headlineLarge,
+          ),
         ),
       ),
     );

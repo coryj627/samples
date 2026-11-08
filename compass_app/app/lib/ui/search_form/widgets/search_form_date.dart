@@ -26,50 +26,59 @@ class SearchFormDate extends StatelessWidget {
         left: Dimens.of(context).paddingScreenHorizontal,
         right: Dimens.of(context).paddingScreenHorizontal,
       ),
-      child: InkWell(
-        borderRadius: BorderRadius.circular(16.0),
-        onTap: () {
-          showDateRangePicker(
-            context: context,
-            firstDate: DateTime.now(),
-            lastDate: DateTime.now().add(const Duration(days: 365)),
-          ).then((dateRange) => viewModel.dateRange = dateRange);
-        },
-        child: Container(
-          height: 64,
-          decoration: BoxDecoration(
-            border: Border.all(color: AppColors.grey1),
-            borderRadius: BorderRadius.circular(16.0),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.symmetric(
-              horizontal: Dimens.paddingHorizontal,
+      // Named by its texts; the role says it opens the date picker.
+      child: Semantics(
+        button: true,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(16.0),
+          onTap: () {
+            showDateRangePicker(
+              context: context,
+              firstDate: DateTime.now(),
+              lastDate: DateTime.now().add(const Duration(days: 365)),
+            ).then((dateRange) => viewModel.dateRange = dateRange);
+          },
+          child: Container(
+            height: 64,
+            decoration: BoxDecoration(
+              border: Border.all(color: AppColors.grey1),
+              borderRadius: BorderRadius.circular(16.0),
             ),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  AppLocalization.of(context).when,
-                  style: Theme.of(context).textTheme.titleMedium,
-                ),
-                ListenableBuilder(
-                  listenable: viewModel,
-                  builder: (context, _) {
-                    final dateRange = viewModel.dateRange;
-                    if (dateRange != null) {
-                      return Text(
-                        dateFormatStartEnd(dateRange),
-                        style: Theme.of(context).textTheme.bodyLarge,
-                      );
-                    } else {
-                      return Text(
-                        AppLocalization.of(context).addDates,
-                        style: Theme.of(context).inputDecorationTheme.hintStyle,
-                      );
-                    }
-                  },
-                ),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(
+                horizontal: Dimens.paddingHorizontal,
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Semantics(
+                    headingLevel: 2,
+                    child: Text(
+                      AppLocalization.of(context).when,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                  ),
+                  ListenableBuilder(
+                    listenable: viewModel,
+                    builder: (context, _) {
+                      final dateRange = viewModel.dateRange;
+                      if (dateRange != null) {
+                        return Text(
+                          dateFormatStartEnd(dateRange),
+                          style: Theme.of(context).textTheme.bodyLarge,
+                        );
+                      } else {
+                        return Text(
+                          AppLocalization.of(context).addDates,
+                          style: Theme.of(
+                            context,
+                          ).inputDecorationTheme.hintStyle,
+                        );
+                      }
+                    },
+                  ),
+                ],
+              ),
             ),
           ),
         ),

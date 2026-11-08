@@ -53,7 +53,8 @@ class ResultCard extends StatelessWidget {
           Positioned.fill(
             child: Material(
               color: Colors.transparent,
-              child: InkWell(onTap: onTap),
+              // Named by the card's texts (merged); the role says it is a button.
+              child: Semantics(button: true, child: InkWell(onTap: onTap)),
             ),
           ),
         ],
