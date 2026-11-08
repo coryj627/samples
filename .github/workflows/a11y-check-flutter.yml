@@ -7,8 +7,10 @@
 #   1. Secret FLUTTER_A11Y_READ_TOKEN: a fine-grained PAT with Contents: Read-only
 #      on coryj627/flutter-a11y (private). It lets `pub get` fetch flutter_a11y_test
 #      and `dart pub global activate` fetch the CLI.
-#   2. coryj627/flutter-a11y → Settings → Actions → General → Access: allow
-#      repositories owned by the user, so `uses: coryj627/flutter-a11y@…` resolves.
+#   2. (Only for a PRIVATE consumer:) coryj627/flutter-a11y → Settings → Actions →
+#      General → Access: allow repositories owned by the user, then
+#      `uses: coryj627/flutter-a11y@<ref>` resolves. This fork is public, so it
+#      checks the action out with the token instead — see below.
 #   3. Code scanning must be enabled on the fork for the SARIF upload step.
 name: a11y-check-flutter (compass_app)
 
@@ -44,9 +46,22 @@ jobs:
         run: |
           git config --global url."https://x-access-token:${TOKEN}@github.com/".insteadOf "https://github.com/"
 
+      # coryj627/flutter-a11y is private and this fork is public. GitHub never lets a
+      # public repository `uses:` an action that lives in a private one, whatever the
+      # access setting on the private repo ("Unable to resolve action"), so check the
+      # action out with the read token and run it as a local action. A private
+      # consumer can write `uses: coryj627/flutter-a11y@<ref>` directly.
+      - name: Fetch the a11y-check-flutter action
+        uses: actions/checkout@v4
+        with:
+          repository: coryj627/flutter-a11y
+          ref: main
+          token: ${{ secrets.FLUTTER_A11Y_READ_TOKEN }}
+          path: .flutter-a11y
+
       - name: Scan compass_app (pub get → flutter test → a11y_check_flutter scan)
         id: a11y
-        uses: coryj627/flutter-a11y@main
+        uses: ./.flutter-a11y
         with:
           working-directory: compass_app/app
           ref: main
