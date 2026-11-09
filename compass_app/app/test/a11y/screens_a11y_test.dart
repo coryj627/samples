@@ -252,10 +252,13 @@ void main() {
         final before = await A11ySnapshot.capture(tester);
         await tester.tap(find.byKey(const ValueKey(addGuestsKey)));
         await tester.pump();
+        // Only the interaction rule: the search form's other findings are already
+        // recorded under `search`, and a second screen id would duplicate them.
         final result = await auditScreen(
           tester,
           screenId: 'search/add-guest',
           beforeChange: before,
+          config: const A11yAuditConfig(rules: {RuleIds.missingLiveRegion}),
         );
         // ignore: avoid_print
         print('a11y search/add-guest: ${result.findings.length} finding(s)');
