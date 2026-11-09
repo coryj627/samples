@@ -1,14 +1,14 @@
 {
   "schema_version": 1,
   "tool": "a11y-check-flutter",
-  "tool_version": "0.2.0",
+  "tool_version": "0.2.1",
   "engines": {
-    "static": "0.2.0",
-    "runtime": "0.2.0"
+    "static": "0.2.1",
+    "runtime": "0.2.1"
   },
   "matcher_version": "2",
   "created_at": "2026-11-08T14:54:04.371743Z",
-  "updated_at": "2026-11-09T21:05:55.469777Z",
+  "updated_at": "2026-11-09T22:26:15.486990Z",
   "summary": {
     "finding_count": 7,
     "by_severity": {
@@ -45,7 +45,7 @@
       "screen_id": "search"
     },
     {
-      "id": "sha256:496c766677fdc8e426851a93e9881e840ece7d127206e0236f57e682fb2aaa94",
+      "id": "sha256:472ba8cb7c0149eec28c33b3237cf6e01337946517cb8267c12d37108ddd0679",
       "rule_id": "flutter/runtime/icon-contrast-insufficient",
       "layer": "runtime",
       "wcag_criterion": "1.4.11",
@@ -54,11 +54,11 @@
       "file_path": "lib/ui/core/ui/tag_chip.dart",
       "line": 50,
       "column": 19,
-      "message_hash": "sha256:23337904eef9681f",
+      "message_hash": "sha256:0ecbf84990d40582",
       "screen_id": "results"
     },
     {
-      "id": "sha256:4fcbe194e778deafb8466df86188e8efe511c8d5bdf5ba30f5c2bd79a274999f",
+      "id": "sha256:4cbc47288f4f9ecd031207d576c5ec1471f763be27a5a339f5eb67fc88a50696",
       "rule_id": "flutter/runtime/icon-contrast-insufficient",
       "layer": "runtime",
       "wcag_criterion": "1.4.11",
@@ -67,7 +67,7 @@
       "file_path": "lib/ui/search_form/widgets/search_form_guests.dart",
       "line": 80,
       "column": 23,
-      "message_hash": "sha256:a8c0e425932ec898",
+      "message_hash": "sha256:0ecbf84990d40582",
       "screen_id": "search"
     },
     {
@@ -97,7 +97,7 @@
       "screen_id": "search"
     },
     {
-      "id": "sha256:ce718533824ea1cb98fe37b8c2226310ce7958ddfe2e8697723e017986d38b24",
+      "id": "sha256:683f3f0c3b09d2fc3f9cda899d06446bcd3046a9b371e06e0f1d7fc4ce83bd47",
       "rule_id": "flutter/runtime/icon-contrast-insufficient",
       "layer": "runtime",
       "wcag_criterion": "1.4.11",
@@ -106,7 +106,7 @@
       "file_path": "lib/ui/search_form/widgets/search_form_guests.dart",
       "line": 100,
       "column": 23,
-      "message_hash": "sha256:7640dc2af68fb158",
+      "message_hash": "sha256:0ecbf84990d40582",
       "screen_id": "search"
     }
   ]
