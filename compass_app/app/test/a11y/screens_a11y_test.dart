@@ -21,6 +21,7 @@ import 'package:compass_app/domain/use_cases/booking/booking_create_use_case.dar
 import 'package:compass_app/domain/use_cases/booking/booking_share_use_case.dart';
 import 'package:compass_app/routing/router.dart';
 import 'package:compass_app/routing/routes.dart';
+import 'package:compass_app/ui/search_form/widgets/search_form_guests.dart';
 import 'package:compass_app/ui/core/localization/applocalization.dart';
 import 'package:compass_app/ui/core/themes/theme.dart';
 import 'package:flutter/material.dart';
@@ -216,5 +217,56 @@ void main() {
 
   testWidgets('booking (existing, by id)', (tester) async {
     await _audit(tester, 'booking/:id', location: Routes.bookingWithId(0));
+  });
+
+  testWidgets('search, after adding a guest (interaction: live region)', (
+    tester,
+  ) async {
+    // missing-live-region only runs against a before-change snapshot: audit the
+    // search form once more after tapping "add guest", under its own screen id.
+    final done = Completer<void>();
+    runZonedGuarded(
+      () => mockNetworkImages(() async {
+        tester.view.devicePixelRatio = 1.0;
+        await tester.binding.setSurfaceSize(const Size(1200, 800));
+        addTearDown(() => tester.binding.setSurfaceSize(null));
+        final auth = FakeAuthRepository()..token = 'TOKEN';
+        final goRouter = router(auth);
+        await tester.pumpWidget(
+          MultiProvider(
+            providers: _fakeProviders(auth),
+            child: MaterialApp.router(
+              localizationsDelegates: [
+                GlobalWidgetsLocalizations.delegate,
+                GlobalMaterialLocalizations.delegate,
+                AppLocalizationDelegate(),
+              ],
+              theme: AppTheme.lightTheme,
+              routerConfig: goRouter,
+            ),
+          ),
+        );
+        await tester.pumpAndSettle();
+        goRouter.go(Routes.search);
+        await tester.pumpAndSettle();
+        final before = await A11ySnapshot.capture(tester);
+        await tester.tap(find.byKey(const ValueKey(addGuestsKey)));
+        await tester.pump();
+        final result = await auditScreen(
+          tester,
+          screenId: 'search/add-guest',
+          beforeChange: before,
+        );
+        // ignore: avoid_print
+        print('a11y search/add-guest: ${result.findings.length} finding(s)');
+      }).then(done.complete, onError: done.completeError),
+      (error, stack) {
+        if ('$error'.contains('GoogleFonts')) return;
+        FlutterError.reportError(
+          FlutterErrorDetails(exception: error, stack: stack),
+        );
+      },
+    );
+    await done.future;
   });
 }

@@ -8,13 +8,13 @@
   },
   "matcher_version": "2",
   "created_at": "2026-11-08T14:54:04.371743Z",
-  "updated_at": "2026-11-09T20:27:51.214798Z",
+  "updated_at": "2026-11-09T21:04:08.735808Z",
   "summary": {
-    "finding_count": 6,
+    "finding_count": 10,
     "by_severity": {
-      "error": 6,
+      "error": 9,
       "warning": 0,
-      "info": 0
+      "info": 1
     }
   },
   "findings": [
@@ -45,6 +45,20 @@
       "screen_id": "search"
     },
     {
+      "id": "sha256:36a536019d34bfc86898a3120e5de2e6393fa5064c686b358261d7783c1b11a4",
+      "rule_id": "flutter/runtime/text-contrast-insufficient",
+      "layer": "runtime",
+      "wcag_criterion": "1.4.3",
+      "wcag_guideline": "1.4",
+      "severity": "error",
+      "file_path": "lib/ui/core/ui/search_bar.dart",
+      "line": 31,
+      "column": 18,
+      "message_hash": "sha256:e94dde2e5aea1fc5",
+      "occurrence_key": "1",
+      "screen_id": "search/add-guest"
+    },
+    {
       "id": "sha256:496c766677fdc8e426851a93e9881e840ece7d127206e0236f57e682fb2aaa94",
       "rule_id": "flutter/runtime/icon-contrast-insufficient",
       "layer": "runtime",
@@ -71,6 +85,33 @@
       "screen_id": "search"
     },
     {
+      "id": "sha256:8898e2ddd084f071a0d830347b16b4451cef1e29fc076c52638a66ff8dcd6263",
+      "rule_id": "flutter/runtime/icon-contrast-insufficient",
+      "layer": "runtime",
+      "wcag_criterion": "1.4.11",
+      "wcag_guideline": "1.4",
+      "severity": "error",
+      "file_path": "lib/ui/search_form/widgets/search_form_guests.dart",
+      "line": 80,
+      "column": 23,
+      "message_hash": "sha256:a8c0e425932ec898",
+      "occurrence_key": "1",
+      "screen_id": "search/add-guest"
+    },
+    {
+      "id": "sha256:567eb67eae5868f535c16eb0d93f0b2f7a6fbfd96a9fcba3797557b5a6ebed49",
+      "rule_id": "flutter/runtime/missing-live-region",
+      "layer": "runtime",
+      "wcag_criterion": "4.1.3",
+      "wcag_guideline": "4.1",
+      "severity": "info",
+      "file_path": "lib/ui/search_form/widgets/search_form_guests.dart",
+      "line": 86,
+      "column": 38,
+      "message_hash": "sha256:b543df1e8db2eb51",
+      "screen_id": "search/add-guest"
+    },
+    {
       "id": "sha256:274506d7056a8a7bcbf8ba4e6a7040114c55dc0f4408f1d7eb8af07d5bf6d450",
       "rule_id": "flutter/runtime/text-contrast-insufficient",
       "layer": "runtime",
@@ -95,6 +136,20 @@
       "column": 23,
       "message_hash": "sha256:7640dc2af68fb158",
       "screen_id": "search"
+    },
+    {
+      "id": "sha256:35a5c3188f1513b33e34f53f33256a2cddfb51659cbb63736bc614ef1a1858ad",
+      "rule_id": "flutter/runtime/icon-contrast-insufficient",
+      "layer": "runtime",
+      "wcag_criterion": "1.4.11",
+      "wcag_guideline": "1.4",
+      "severity": "error",
+      "file_path": "lib/ui/search_form/widgets/search_form_guests.dart",
+      "line": 100,
+      "column": 23,
+      "message_hash": "sha256:7640dc2af68fb158",
+      "occurrence_key": "1",
+      "screen_id": "search/add-guest"
     }
   ]
 }
